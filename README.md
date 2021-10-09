@@ -1,6 +1,6 @@
-Para este ejemplo
-paso1: clonar repositorio 
-paso2: ejecutar npm i 
+Para este ejemplo 
+paso1: clonar repositorio   
+paso2: ejecutar npm i   
 paso3: npm run dev  
 paso4: bajar postman  
 paso5: ejecutar POST start proyect (con {"proyectId" : "proyecto1"})  
