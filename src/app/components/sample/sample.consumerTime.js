@@ -59,18 +59,24 @@ class ExecuteSample {
   static async report(req) {
     let output = {};
     try {
-        const { proyectId } = req.params;
-        let project = proyects.find((element) => element.job === proyectId);
-        if (project) {
-            output.success = reportSuccess.filter(
-            (element) => element.job === proyectId
-            );
-        } else {
-          output = "does no exist project";
-        }
-        return output;
+      const { proyectId } = req.params;
+      let project = proyects.find((element) => element.job === proyectId);
+      if (project) {
+        output.fail = reportFail.filter((element) => element.job === proyectId);
+        output.success = reportSuccess.filter(
+          (element) => element.job === proyectId
+        );
+        let sumMinutes = 0;
+        output.success.forEach((element) => {
+          sumMinutes = element.spendTime + sumMinutes;
+        });
+        output.sumMinutes = sumMinutes / 60;
+      } else {
+        output = "does no exist project";
+      }
+      return output;
     } catch (err) {
-        return err;
+      return err;
     }
   }
 
