@@ -33,15 +33,18 @@ class ExecuteSample {
       let project = proyects.find((element) => element.job === proyectId);
       if (project) {
         if (project.state === 0) {
-           project.error++;
-           await this.saveReport(project, reportFail, "error Off");
+          project.error++;
+          await this.saveReport(project, reportFail, "error Off");
         } else {
-            project.state = 0;
-            project.endTime = Date.now();
-            (project.spendTimeDesc =
+          project.state = 0;
+          project.endTime = Date.now();
+          (project.spendTimeDesc =
             (project.endTime - project.beginTime) / 1000 + "secs"),
             (project.spendTime = (project.endTime - project.beginTime) / 1000),
-            await this.saveReport( project,reportSuccess,  "ok:" + project.job + " timeSpent:" + project.spendTime
+            await this.saveReport(
+              project,
+              reportSuccess,
+              "ok:" + project.job + " timeSpent:" + project.spendTime
             );
         }
       } else {
@@ -54,6 +57,21 @@ class ExecuteSample {
   }
 
   static async report(req) {
+    let output = {};
+    try {
+        const { proyectId } = req.params;
+        let project = proyects.find((element) => element.job === proyectId);
+        if (project) {
+            output.success = reportSuccess.filter(
+            (element) => element.job === proyectId
+            );
+        } else {
+          output = "does no exist project";
+        }
+        return output;
+    } catch (err) {
+        return err;
+    }
   }
 
   static async reports() {
@@ -61,13 +79,13 @@ class ExecuteSample {
 
   static async saveReport(p, r, d) {
     try {
-        const item = new Object();
-        item.proyect = p.job;
-        (item.registerDay = new Date()), (item.description = d);
-        r.push({ ...p, ...item });
-        return r;
+      const item = new Object();
+      item.proyect = p.job;
+      (item.registerDay = new Date()), (item.description = d);
+      r.push({ ...p, ...item });
+      return r;
     } catch (err) {
-        return err;
+      return err;
     }
   }
 }
