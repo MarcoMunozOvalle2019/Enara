@@ -1,3 +1,4 @@
+let reportSuccess = [];
 let reportFail = [];
 
 const proyects = require("../../../../data/data");
@@ -27,6 +28,29 @@ class ExecuteSample {
   }
 
   static async Off(req) {
+    try {
+      const { proyectId } = req.body;
+      let project = proyects.find((element) => element.job === proyectId);
+      if (project) {
+        if (project.state === 0) {
+           project.error++;
+           await this.saveReport(project, reportFail, "error Off");
+        } else {
+            project.state = 0;
+            project.endTime = Date.now();
+            (project.spendTimeDesc =
+            (project.endTime - project.beginTime) / 1000 + "secs"),
+            (project.spendTime = (project.endTime - project.beginTime) / 1000),
+            await this.saveReport( project,reportSuccess,  "ok:" + project.job + " timeSpent:" + project.spendTime
+            );
+        }
+      } else {
+        project = "does no exist project";
+      }
+      return project;
+    } catch (err) {
+      return err;
+    }
   }
 
   static async report(req) {
@@ -42,10 +66,9 @@ class ExecuteSample {
         (item.registerDay = new Date()), (item.description = d);
         r.push({ ...p, ...item });
         return r;
-       } 
-      catch (err) {
+    } catch (err) {
         return err;
-      }
+    }
   }
 }
 
