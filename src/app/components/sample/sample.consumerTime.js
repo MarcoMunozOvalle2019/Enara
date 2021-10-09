@@ -81,6 +81,42 @@ class ExecuteSample {
   }
 
   static async reports() {
+    try {
+      let output = {};
+      output.fail = reportFail;
+      output.success = reportSuccess;
+
+      let proyectsSuccess = [];
+      output.success.forEach((element) => {
+        let project = proyectsSuccess.find(
+          (element2) => element2.proyectId === element.job
+        );
+        if (!project) {
+          proyectsSuccess.push({
+            proyectId: element.job,
+            sumMinutesDesc: element.spendTime / 60 + " minutes",
+            sumMinutes: element.spendTime / 60,
+          });
+        } else {
+          proyectsSuccess = proyectsSuccess.filter(function (obj) {
+            return obj.proyectId !== element.job;
+          });
+
+          proyectsSuccess.push({
+            proyectId: element.job,
+            sumMinutes: (project.sumMinutes + element.spendTime) / 60,
+            sumMinutesDesc:
+              (project.sumMinutes + element.spendTime) / 60 + " minutes",
+          });
+        }
+      });
+
+      output.proyectWithTime = proyectsSuccess;
+
+      return output;
+    } catch (err) {
+      return err;
+    }
   }
 
   static async saveReport(p, r, d) {
