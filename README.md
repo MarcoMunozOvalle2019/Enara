@@ -22,7 +22,7 @@ pado6: ejecutar PUT end proyect ( con {"proyectId" : "proyecto2"})
 paso7: ejecutar reports proyect 
 paso8: ejecutar report proyect2 
 
-Para este ejemplo Prueba4 (errores) 
+Para este ejemplo Prueba4 (errores)         
 paso5: ejecutar POST start proyect (con {"proyectId" : "proyecto1"})  
 pado6: ejecutar PUT end proyect ( con {"proyectId" : "proyecto1"})  
 paso5: ejecutar POST start proyect (con {"proyectId" : "proyecto1"})  
