@@ -1,4 +1,4 @@
-Para este ejemplo Prueba1 
+Para este ejemplo Prueba1   
 paso1: clonar repositorio   
 paso2: ejecutar npm i   
 paso3: npm run dev  
