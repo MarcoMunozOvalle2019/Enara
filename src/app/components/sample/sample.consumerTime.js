@@ -10,6 +10,7 @@ class ExecuteSample {
       if (project) {
         if (project.state === 1) {
           project.error++;
+          await this.saveReport(project, reportFail, "error On");
         } else {
           project.beginTime = Date.now();
           project.state = 1;
@@ -35,6 +36,16 @@ class ExecuteSample {
   }
 
   static async saveReport(p, r, d) {
+    try {
+        const item = new Object();
+        item.proyect = p.job;
+        (item.registerDay = new Date()), (item.description = d);
+        r.push({ ...p, ...item });
+        return r;
+       } 
+      catch (err) {
+        return err;
+      }
   }
 }
 
